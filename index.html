@@ -23,7 +23,7 @@
 	<script
       src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     ></script>
-    <script type="text/javascript" src="./scripts/L.TileLayer.Zoomify.js"></script>  
+    <script type="text/javascript" src="L.TileLayer.Zoomify.js"></script>  
     
     <script type="application/javascript">
 		var map = L.map('map', {
@@ -31,19 +31,18 @@
     	});
     	
     	//Loading the Zoomify tile layer, notice the URL
-// [--old--]    	var layer = L.tileLayer.zoomify('./greyhawk/{g}/{z}-{x}-{y}.jpg', {
-    	var layer = L.tileLayer.zoomify('http://thematicmapping.org/playground/zoomify/books/', {
-			width: 5472,
-			height: 3648,
-//			attribution: 'Flanaess Full Map 598 CY - 2019 Edition REV1 hexed [Anna B Meyer]',
-//			continuousWorld: false,
-//			noWrap: true,	
-//			minZoom: 1,
-//			maxZoom: 8,
+    	var layer = L.tileLayer.zoomify('./greyhawk/{g}/{z}-{x}-{y}.jpg', {
+			width: 29051,
+			height: 25235,
+			attribution: 'Flanaess Full Map 598 CY - 2019 Edition REV1 hexed [Anna B Meyer]',
+			continuousWorld: false,
+			noWrap: true,	
+			minZoom: 1,
+			maxZoom: 8,
 		}).addTo(map);
 
 		//Setting the view to our layer bounds, set by our Zoomify plugin
-//		map.fitBounds(layer.getBounds());
+		map.fitBounds(layer.getBounds());
 		
 		//Coordinate Finder
 		var marker = L.marker([0, 0], {
