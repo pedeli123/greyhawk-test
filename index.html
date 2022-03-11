@@ -1,0 +1,88 @@
+<!doctype html>
+<html = style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <title>Mythras Greyhawk Map</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <style type="text/css">
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body style="height: 100%;margin: 0;">
+	<div id="map" style="width: 100%; height: 100%; background: #000000;"></div>
+	<script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    ></script>
+    <script type="text/javascript" src="src/L.TileLayer.Zoomify.js"></script>  
+    
+    <script type="application/javascript">
+		var map = L.map('map', {
+   	     	crs: L.CRS.Simple //Set a flat projection, as we are projecting an image
+    	});
+    	
+    	//Loading the Zoomify tile layer, notice the URL
+    	var layer = L.tileLayer.zoomify('./greyhawk/{g}/{z}-{x}-{y}.jpg', {
+			width: 29051,
+			height: 25235,
+			attribution: 'Flanaess Full Map 598 CY - 2019 Edition REV1 hexed [Anna B Meyer]',
+			continuousWorld: false,
+			noWrap: true,	
+			minZoom: 1,
+			maxZoom: 8,
+		}).addTo(map);
+
+		//Setting the view to our layer bounds, set by our Zoomify plugin
+		map.fitBounds(layer.getBounds());
+		
+		//Coordinate Finder
+		var marker = L.marker([0, 0], {
+			draggable: true,
+		}).addTo(map);
+		marker.bindPopup('LatLng Marker').openPopup();
+		marker.on('dragend', function(e) {
+			marker.getPopup().setContent(marker.getLatLng().toString()).openOn(map);
+		});
+
+	//Markers
+	var cragmaw = L.marker([-123.944923, 134.453125]).bindPopup('<b>Cragmaw Cave</b>');
+	var metnal = L.marker([-163.497398, 91.46875]).bindPopup('<b>Metnal Village</b>');
+	var horses = L.marker([-124.035227,134.367188]).bindPopup('<b>Dead Horses on Path</b>');
+	var horvyl = L.marker([-124.246411,134.386719]).bindPopup('<b>Met Horvyl Fylani</b>');
+
+	var circle = L.circle([-123.960974, 134.335938], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.2,
+    radius: 2
+	}).addTo(map);
+
+	//Marker Groups
+	var mg_place = L.layerGroup([cragmaw,metnal]);
+	var mg_encounter = L.layerGroup([horses, horvyl]);
+	var mg_current = L.layerGroup([circle]);
+	
+	//Marker Overlay
+	var overlays={
+		"Places" : mg_place,
+		"Encounters" : mg_encounter,
+		"Current" : mg_current,
+		}
+
+	circle.bindPopup("Current Adventure Location");
+
+//GROUP CONTROLS
+	L.control.layers(null, overlays).addTo(map);
+	
+    </script>
+</body>
+</html>
