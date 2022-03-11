@@ -35,15 +35,15 @@
     	var layer = L.tileLayer.zoomify('http://thematicmapping.org/playground/zoomify/books/', {
 			width: 5472,
 			height: 3648,
-			attribution: 'Flanaess Full Map 598 CY - 2019 Edition REV1 hexed [Anna B Meyer]',
-			continuousWorld: false,
-			noWrap: true,	
-			minZoom: 1,
-			maxZoom: 8,
+//			attribution: 'Flanaess Full Map 598 CY - 2019 Edition REV1 hexed [Anna B Meyer]',
+//			continuousWorld: false,
+//			noWrap: true,	
+//			minZoom: 1,
+//			maxZoom: 8,
 		}).addTo(map);
 
 		//Setting the view to our layer bounds, set by our Zoomify plugin
-		map.fitBounds(layer.getBounds());
+//		map.fitBounds(layer.getBounds());
 		
 		//Coordinate Finder
 		var marker = L.marker([0, 0], {
